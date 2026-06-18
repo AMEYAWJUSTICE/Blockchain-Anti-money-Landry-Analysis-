@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -20,7 +21,7 @@ def load_data():
     # Ensure to check for string '8' as pandas often reads numeric headers as strings
     if '8' in all_transactions_df.columns and 'transaction_amount' not in all_transactions_df.columns:
         all_transactions_df.rename(columns={'8': 'transaction_amount'}, inplace=True)
-    
+
     # Fix: Ensure column '8' is always treated as 'transaction_amount' before any other operations
     if '8' in all_transactions_df.columns:
         all_transactions_df.rename(columns={'8': 'transaction_amount'}, inplace=True)
@@ -60,7 +61,7 @@ def make_predictions(wallets_features_df, _model_xgb):
     wallets_features_df['prediction_proba_suspicious'] = _model_xgb.predict_proba(X_wallets)[:, 1]
 
     # Map numerical labels to readable strings
-    label_map = {0: 'Legitimate', 1: 'Suspicious'} 
+    label_map = {0: 'Legitimate', 1: 'Suspicious'}
     wallets_features_df['predicted_aml_label'] = wallets_features_df['predicted_aml_label_num'].map(label_map)
 
     # True labels (for evaluation or comparison)
